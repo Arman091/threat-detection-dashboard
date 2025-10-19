@@ -8,6 +8,7 @@ import { ThreatTypeIcon, StatusBadge } from './ThreatTypeIcon';
 
 interface ThreatTableProps {
   threats: Threat[];
+  filterType?: string;
 }
 
 interface ThreatRowProps {
@@ -17,23 +18,23 @@ interface ThreatRowProps {
 }
 
 function ThreatRow({ threat, isExpanded, onToggle }: ThreatRowProps) {
-  const truncatedSubject = threat.details.subject.length > 50 
-    ? `${threat.details.subject.substring(0, 50)}...` 
+  const truncatedSubject = threat.details.subject.length > 50
+    ? `${threat.details.subject.substring(0, 50)}...`
     : threat.details.subject;
 
-  const truncatedSender = threat.details.sender.length > 25 
-    ? `${threat.details.sender.substring(0, 25)}...` 
+  const truncatedSender = threat.details.sender.length > 25
+    ? `${threat.details.sender.substring(0, 25)}...`
     : threat.details.sender;
 
-  const isSuspiciousSender = threat.details.sender.includes('microsft') || 
-                            threat.details.sender.includes('typo') ||
-                            threat.details.sender.includes('fake');
+  const isSuspiciousSender = threat.details.sender.includes('microsft') ||
+    threat.details.sender.includes('typo') ||
+    threat.details.sender.includes('fake');
 
   return (
     <>
-      <tr 
+      <tr
         onClick={onToggle}
-        className="cursor-pointer hover:bg-gray-50 border-b border-gray-200 transition-colors"
+        className="cursor-pointer hover:bg-blue-50 border-b border-gray-200 transition-all duration-200 group"
       >
         <td className="px-4 py-4">
           <RiskBadge score={threat.risk_score} size="sm" />
@@ -50,7 +51,7 @@ function ThreatRow({ threat, isExpanded, onToggle }: ThreatRowProps) {
         </td>
         <td className="px-4 py-4">
           <div className="max-w-xs">
-            <p 
+            <p
               className={`truncate ${isSuspiciousSender ? 'text-red-600 font-medium' : 'text-gray-600'}`}
               title={threat.details.sender}
             >
@@ -60,9 +61,14 @@ function ThreatRow({ threat, isExpanded, onToggle }: ThreatRowProps) {
           </div>
         </td>
         <td className="px-4 py-4">
-          <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium text-white ${getAgeColor(threat.timestamp)}`}>
-            {formatThreatAge(threat.timestamp)}
-          </span>
+          <div className="flex items-center justify-between">
+            <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium text-white ${getAgeColor(threat.timestamp)}`}>
+              {formatThreatAge(threat.timestamp)}
+            </span>
+            <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs text-blue-600 font-medium">
+              Click to view details
+            </span>
+          </div>
         </td>
       </tr>
       {isExpanded && (
@@ -73,15 +79,15 @@ function ThreatRow({ threat, isExpanded, onToggle }: ThreatRowProps) {
                 <div>
                   <h4 className="font-semibold text-gray-900 mb-2">Full Details</h4>
                   <div className="space-y-2">
-                    <p><span className="font-medium">Subject:</span> {threat.details.subject}</p>
+                    <p><span className="font-medium">Subject:</span><span className="text-[14px] text-gray-600 pl-2">{threat.details.subject}</span></p>
                     <p>
-                      <span className="font-medium">Sender:</span> 
-                      <span className={isSuspiciousSender ? 'text-red-600 font-medium ml-1' : 'ml-1'}>
+                      <span className="font-medium text-black">Sender:</span>
+                      <span className={isSuspiciousSender ? 'text-red-600 font-medium ml-1' : 'text-[14px] text-gray-600 ml-1'}>
                         {threat.details.sender}
                         {isSuspiciousSender && <span className="ml-1">⚠️ (Suspicious domain)</span>}
                       </span>
                     </p>
-                    <p><span className="font-medium">Timestamp:</span> {formatFullTimestamp(threat.timestamp)}</p>
+                    <p><span className="font-medium">Timestamp:</span><span className="text-[14px] text-gray-600 pl-2">{formatFullTimestamp(threat.timestamp)}</span></p>
                   </div>
                 </div>
                 <div>
@@ -108,15 +114,19 @@ function ThreatRow({ threat, isExpanded, onToggle }: ThreatRowProps) {
   );
 }
 
-export function ThreatTable({ threats }: ThreatTableProps) {
+export function ThreatTable({ threats, filterType = 'all' }: ThreatTableProps) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const toggleExpand = (id: string) => {
     setExpandedId(expandedId === id ? null : id);
   };
 
-  // Sort threats by risk score (highest first)
-  const sortedThreats = [...threats].sort((a, b) => b.risk_score - a.risk_score);
+  // Filter and sort threats
+  const filteredThreats = filterType === 'all'
+    ? threats
+    : threats.filter(threat => threat.type === filterType);
+
+  const sortedThreats = [...filteredThreats].sort((a, b) => b.risk_score - a.risk_score);
 
   return (
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
@@ -126,7 +136,7 @@ export function ThreatTable({ threats }: ThreatTableProps) {
           Click any row to view detailed information. Threats are sorted by risk score.
         </p>
       </div>
-      
+
       <div className="overflow-x-auto">
         <table className="w-full">
           <thead className="bg-gray-50">
@@ -160,7 +170,7 @@ export function ThreatTable({ threats }: ThreatTableProps) {
           </tbody>
         </table>
       </div>
-      
+
       {sortedThreats.length === 0 && (
         <div className="text-center py-12">
           <p className="text-gray-500">No threats detected</p>

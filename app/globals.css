@@ -3,10 +3,18 @@
 
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-threat-critical: var(--Critical-bg-color);
+  --color-threat-high: var(--High-bg-color);
+  --color-threat-medium: var(--Medium-bg-color);
+  --color-threat-low: var(--Low-bg-color);
+  
+  --color-threat-phishing: #EC4899;
+  --color-threat-malware: #9333EA;
+  --color-threat-spam: #6B7280;
+  
+  --color-status-quarantined: #3B82F6;
+  --color-status-active: #DC2626;
+  --color-status-resolved: #16A34A;
 }
 
   :root{
@@ -18,8 +26,6 @@
     --font-size-lg: 1.125rem;  /* 18px */
     --font-size-xl: 1.5rem;   /* 24px */
     --font-size-h1:3.75rem;  /* 60px*/
-    --background: #0a0a0a;
-    --foreground: #ededed;
     /* color variables */
      --yellow_color: #FFCD00;
      --black_color:#1A0000;
@@ -34,7 +40,8 @@
     --Low-bg-color: #09C475;
     --Medium-bg-color: #EAB308;
     --High-bg-color: #EA580C;
-    --Critical-bg-color: #DC2626;
+    --Critical-bg-color: #740b18eb;
+    
   }
 
   @font-face {
@@ -47,6 +54,6 @@
 
 body {
   background: var(--background);
-  color: var(--foreground);
+  color: var(--text-primary);
   font-family: var(--primary-font);
 }

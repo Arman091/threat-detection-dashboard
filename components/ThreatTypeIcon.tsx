@@ -1,3 +1,7 @@
+import { PhishingIcon } from '@/assets/icons/phishing';
+import { MalwareIcon } from '@/assets/icons/malware';
+import { SpamIcon } from '@/assets/icons/spam';
+import { IconProps } from '@/types/shared';
 import { ThreatTypeConfig } from '@/types/threat';
 
 export function ThreatTypeIcon({ type }: { type: string }) {
@@ -5,27 +9,27 @@ export function ThreatTypeIcon({ type }: { type: string }) {
     switch (type) {
       case 'Phishing':
         return {
-          icon: '🎣',
-          color: 'text-pink-600',
+          icon: (props: IconProps) => <PhishingIcon {...props} />,
+          color: 'text-[var(--color-threat-phishing)]',
           bgColor: 'bg-pink-50'
         };
       case 'Malware':
         return {
-          icon: '🦠',
-          color: 'text-purple-600',
+          icon: (props: IconProps) => <MalwareIcon {...props} />,
+          color: 'text-[var(--color-threat-malware)]',
           bgColor: 'bg-purple-50'
         };
       case 'Spam':
         return {
-          icon: '📧',
-          color: 'text-gray-600',
-          bgColor: 'bg-gray-50'
+          icon: (props: IconProps) => <SpamIcon {...props} />,
+          color: 'text-[var(--color-threat-spam)]',
+          bgColor: 'bg-gray-200'
         };
       default:
         return {
-          icon: '❓',
+          icon: (props: IconProps) => <PhishingIcon {...props} />,
           color: 'text-gray-600',
-          bgColor: 'bg-gray-50'
+          bgColor: 'bg-green-50'
         };
     }
   };
@@ -34,11 +38,19 @@ export function ThreatTypeIcon({ type }: { type: string }) {
 
   return (
     <span 
-      className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${config.bgColor} ${config.color}`}
+      className={`inline-flex items-center min-w-[100px] justify-center px-2 py-1 rounded-full text-sm font-medium ${config.bgColor}`}
       title={`Threat Type: ${type}`}
     >
-      <span className="mr-1">{config.icon}</span>
-      <span className="hidden sm:inline">{type}</span>
+      <span className="mr-1 flex items-center">
+        {config.icon({ 
+          color: type === 'Phishing' ? 'var(--color-threat-phishing)' : 
+                 type === 'Malware' ? 'var(--color-threat-malware)' : 
+                 'var(--color-threat-spam)',
+          width: 16,
+          height: 16
+        })}
+      </span>
+      <span className={`hidden sm:inline ${config.color}`}>{type}</span>
     </span>
   );
 }
@@ -48,19 +60,19 @@ export function StatusBadge({ status }: { status: string }) {
     switch (status) {
       case 'Quarantined':
         return {
-          color: 'text-blue-700',
+          color: 'text-[var(--color-status-quarantined)]',
           bgColor: 'bg-blue-100',
           icon: '🔒'
         };
       case 'Active':
         return {
-          color: 'text-red-700',
+          color: 'text-[var(--color-status-active)]',
           bgColor: 'bg-red-100',
           icon: '⚠️'
         };
       case 'Resolved':
         return {
-          color: 'text-green-700',
+          color: 'text-[var(--color-status-resolved)]',
           bgColor: 'bg-green-100',
           icon: '✅'
         };

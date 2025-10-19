@@ -8,6 +8,7 @@ import { ThreatTypeIcon, StatusBadge } from './ThreatTypeIcon';
 
 interface ThreatCardProps {
   threats: Threat[];
+  filterType?: string;
 }
 
 interface SingleThreatCardProps {
@@ -22,7 +23,7 @@ function SingleThreatCard({ threat, isExpanded, onToggle }: SingleThreatCardProp
                             threat.details.sender.includes('fake');
 
   return (
-    <div className="border border-gray-200 rounded-lg p-4 mb-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+    <div className="border border-gray-200 rounded-lg p-4 mb-4 bg-white shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200 group">
       {/* Header: Risk + Type */}
       <div className="flex justify-between items-start mb-3">
         <div className="flex gap-2 flex-wrap">
@@ -53,9 +54,12 @@ function SingleThreatCard({ threat, isExpanded, onToggle }: SingleThreatCardProp
       {/* Expand/Collapse Button */}
       <button
         onClick={onToggle}
-        className="w-full text-left text-sm text-blue-600 hover:text-blue-800 font-medium py-2 border-t border-gray-100"
+        className="w-full text-left text-sm text-blue-600 hover:text-blue-800 font-medium py-2 border-t border-gray-100 flex items-center justify-between group-hover:bg-blue-50 transition-colors duration-200"
       >
-        {isExpanded ? 'Hide Details' : 'View Details'}
+        <span>{isExpanded ? 'Hide Details' : 'View Details'}</span>
+        <span className="text-xs opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          {isExpanded ? '↑' : '↓'}
+        </span>
       </button>
 
       {/* Expanded Details */}
@@ -65,15 +69,15 @@ function SingleThreatCard({ threat, isExpanded, onToggle }: SingleThreatCardProp
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Full Details</h4>
               <div className="space-y-2 text-sm">
-                <p><span className="font-medium">Subject:</span> {threat.details.subject}</p>
+                <p><span className="font-medium">Subject:</span><span className="text-[14px] text-gray-600 pl-2">{threat.details.subject}</span></p>
                 <p>
-                  <span className="font-medium">Sender:</span> 
-                  <span className={isSuspiciousSender ? 'text-red-600 font-medium ml-1' : 'ml-1'}>
+                  <span className="font-medium text-black">Sender:</span>
+                  <span className={isSuspiciousSender ? 'text-red-600 font-medium ml-1' : 'text-[14px] text-gray-600 ml-1'}>
                     {threat.details.sender}
                     {isSuspiciousSender && <span className="ml-1">⚠️ (Suspicious domain)</span>}
                   </span>
                 </p>
-                <p><span className="font-medium">Timestamp:</span> {formatFullTimestamp(threat.timestamp)}</p>
+                <p><span className="font-medium">Timestamp:</span><span className="text-[14px] text-gray-600 pl-2">{formatFullTimestamp(threat.timestamp)}</span></p>
               </div>
             </div>
             
@@ -96,15 +100,19 @@ function SingleThreatCard({ threat, isExpanded, onToggle }: SingleThreatCardProp
   );
 }
 
-export function ThreatCard({ threats }: ThreatCardProps) {
+export function ThreatCard({ threats, filterType = 'all' }: ThreatCardProps) {
   const [expandedId, setExpandedId] = useState<string | null>(null);
 
   const toggleExpand = (id: string) => {
     setExpandedId(expandedId === id ? null : id);
   };
 
-  // Sort threats by risk score (highest first)
-  const sortedThreats = [...threats].sort((a, b) => b.risk_score - a.risk_score);
+  // Filter and sort threats
+  const filteredThreats = filterType === 'all' 
+    ? threats 
+    : threats.filter(threat => threat.type === filterType);
+    
+  const sortedThreats = [...filteredThreats].sort((a, b) => b.risk_score - a.risk_score);
 
   return (
     <div className="md:hidden">

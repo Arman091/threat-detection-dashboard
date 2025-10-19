@@ -1,12 +1,20 @@
+'use client';
+
+import { useState } from 'react';
 import { ThreatFeedResponse } from '@/types/threat';
 import { SummaryStats } from '@/components/SummaryStats';
 import { ThreatTable } from '@/components/ThreatTable';
 import { ThreatCard } from '@/components/ThreatCard';
+import { ThreatFilter } from '@/components/ThreatFilter';
+import { MalwareIcon } from '@/assets/icons/malware';
+import { SpamIcon } from '@/assets/icons/spam';
 import mockData from '@/data/mockData.json';
+import { ScanIcon } from '@/assets/icons/scan';
 
 export default function Home() {
   // In a real app, this would come from an API call
-  const data: ThreatFeedResponse = mockData;
+  const data: ThreatFeedResponse = mockData as ThreatFeedResponse;
+  const [filterType, setFilterType] = useState<string>('all');
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -26,15 +34,24 @@ export default function Home() {
           emailsScanned={data.summary.emails_scanned}
           threatsDetected={data.summary.threats_detected}
           quarantinedItems={data.summary.quarantined_items}
+          emailIcon={ScanIcon}
+          threatIcon={MalwareIcon}
+          shieldIcon={SpamIcon}
+        />
+
+        {/* Threat Filter */}
+        <ThreatFilter 
+          selectedType={filterType}
+          onFilterChange={setFilterType}
         />
 
         {/* Desktop Table View */}
         <div className="hidden md:block">
-          <ThreatTable threats={data.threats} />
+          <ThreatTable threats={data.threats} filterType={filterType} />
         </div>
 
         {/* Mobile Card View */}
-        <ThreatCard threats={data.threats} />
+        <ThreatCard threats={data.threats} filterType={filterType} />
       </div>
     </div>
   );

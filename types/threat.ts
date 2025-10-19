@@ -1,3 +1,5 @@
+import { IconProps } from "./shared";
+
 export interface ThreatDetails {
   subject: string;
   sender: string;
@@ -31,7 +33,7 @@ export interface RiskConfig {
 }
 
 export interface ThreatTypeConfig {
-  icon: string;
+  icon: (iconProps:IconProps) => React.ReactElement;
   color: string;
   bgColor: string;
 }

@@ -33,9 +33,9 @@ export function getAgeColor(timestamp: string): string {
   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
   
   if (diffInHours < 1) {
-    return 'bg-red-500'; // Recent - urgent attention
+    return 'bg-[var(--color-threat-critical)]'; // Recent - urgent attention
   } else if (diffInHours < 24) {
-    return 'bg-yellow-500'; // Today - medium priority
+    return 'bg-[var(--color-threat-medium)]'; // Today - medium priority
   } else {
     return 'bg-gray-500'; // Older - lower priority
   }
