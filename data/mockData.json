@@ -1,0 +1,97 @@
+{
+  "summary": {
+    "emails_scanned": 14820,
+    "threats_detected": 26,
+    "quarantined_items": 18
+  },
+  "threats": [
+    {
+      "id": "th_1a2b3c",
+      "timestamp": "2023-10-27T08:45:10Z",
+      "type": "Phishing",
+      "status": "Quarantined",
+      "risk_score": 95,
+      "details": {
+        "subject": "Action Required: Your Account Has Been Suspended",
+        "sender": "support@microsft.com"
+      }
+    },
+    {
+      "id": "th_2b3c4d",
+      "timestamp": "2023-10-27T06:30:15Z",
+      "type": "Malware",
+      "status": "Active",
+      "risk_score": 88,
+      "details": {
+        "subject": "Invoice Attached - Please Review",
+        "sender": "admin@company-invoice.com"
+      }
+    },
+    {
+      "id": "th_3c4d5e",
+      "timestamp": "2023-10-27T04:15:22Z",
+      "type": "Spam",
+      "status": "Quarantined",
+      "risk_score": 35,
+      "details": {
+        "subject": "Limited Time Offer - 50% Off Everything!",
+        "sender": "promo@deals-supermarket.net"
+      }
+    },
+    {
+      "id": "th_4d5e6f",
+      "timestamp": "2023-10-27T02:45:33Z",
+      "type": "Phishing",
+      "status": "Resolved",
+      "risk_score": 72,
+      "details": {
+        "subject": "Urgent: Verify Your Identity Immediately",
+        "sender": "security@bank-verify.org"
+      }
+    },
+    {
+      "id": "th_5e6f7g",
+      "timestamp": "2023-10-27T01:20:45Z",
+      "type": "Malware",
+      "status": "Quarantined",
+      "risk_score": 91,
+      "details": {
+        "subject": "Your Package Delivery Failed",
+        "sender": "noreply@package-delivery.co"
+      }
+    },
+    {
+      "id": "th_6f7g8h",
+      "timestamp": "2023-10-26T23:55:12Z",
+      "type": "Spam",
+      "status": "Active",
+      "risk_score": 28,
+      "details": {
+        "subject": "Congratulations! You've Won $1000",
+        "sender": "winner@lottery-prize.info"
+      }
+    },
+    {
+      "id": "th_7g8h9i",
+      "timestamp": "2023-10-26T22:10:08Z",
+      "type": "Phishing",
+      "status": "Quarantined",
+      "risk_score": 84,
+      "details": {
+        "subject": "Your Subscription Will Expire Soon",
+        "sender": "billing@subscription-service.com"
+      }
+    },
+    {
+      "id": "th_8h9i0j",
+      "timestamp": "2023-10-26T20:35:27Z",
+      "type": "Malware",
+      "status": "Active",
+      "risk_score": 76,
+      "details": {
+        "subject": "Important Document for Your Review",
+        "sender": "documents@secure-files.net"
+      }
+    }
+  ]
+}

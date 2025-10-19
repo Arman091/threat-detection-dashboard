@@ -1,0 +1,82 @@
+import { RiskLevel } from '@/types/threat';
+
+interface RiskBadgeProps {
+  score: number;
+  showScore?: boolean;
+  size?: 'sm' | 'md' | 'lg';
+}
+
+export function RiskBadge({ score, showScore = true, size = 'md' }: RiskBadgeProps) {
+  const getRiskConfig = (score: number) => {
+    if (score >= 76) {
+      return {
+        level: 'critical' as RiskLevel,
+        color: 'text-white',
+        bgColor: 'bg-red-600',
+        label: 'Critical'
+      };
+    } else if (score >= 51) {
+      return {
+        level: 'high' as RiskLevel,
+        color: 'text-white',
+        bgColor: 'bg-orange-600',
+        label: 'High'
+      };
+    } else if (score >= 26) {
+      return {
+        level: 'medium' as RiskLevel,
+        color: 'text-gray-900',
+        bgColor: 'bg-yellow-500',
+        label: 'Medium'
+      };
+    } else {
+      return {
+        level: 'low' as RiskLevel,
+        color: 'text-white',
+        bgColor: 'bg-green-600',
+        label: 'Low'
+      };
+    }
+  };
+
+  const config = getRiskConfig(score);
+  
+  const sizeClasses = {
+    sm: 'px-2 py-1 text-xs',
+    md: 'px-3 py-1 text-sm',
+    lg: 'px-4 py-2 text-base'
+  };
+
+  return (
+    <span 
+      className={`
+        inline-flex items-center rounded-full font-semibold
+        ${config.bgColor} ${config.color} ${sizeClasses[size]}
+      `}
+      title={`Risk Score: ${score}/100 - ${config.label}`}
+    >
+      {showScore && (
+        <span className="mr-1">
+          {score}
+        </span>
+      )}
+      <span>{config.label}</span>
+    </span>
+  );
+}
+
+export function RiskScoreBar({ score }: { score: number }) {
+  const percentage = Math.min(score, 100);
+  const config = score >= 76 ? 'bg-red-600' : 
+                 score >= 51 ? 'bg-orange-600' : 
+                 score >= 26 ? 'bg-yellow-500' : 'bg-green-600';
+
+  return (
+    <div className="w-full bg-gray-200 rounded-full h-2">
+      <div 
+        className={`${config} h-2 rounded-full transition-all duration-300`}
+        style={{ width: `${percentage}%` }}
+      />
+    </div>
+  );
+}
