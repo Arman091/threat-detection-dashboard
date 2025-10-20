@@ -25,7 +25,7 @@ export function RiskBadge({ score, showScore = true, size = 'md' }: RiskBadgePro
     } else if (score >= 26) {
       return {
         level: 'medium' as RiskLevel,
-        color: 'text-gray-900',
+        color: 'text-white',
         bgColor: 'bg-[var(--color-threat-medium)]',
         label: 'Medium'
       };

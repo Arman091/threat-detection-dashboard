@@ -26,20 +26,20 @@ export function formatThreatAge(timestamp: string): string {
   }
 }
 
-export function getAgeColor(timestamp: string): string {
-  const now = new Date();
-  const threatTime = new Date(timestamp);
-  const diffInMs = now.getTime() - threatTime.getTime();
-  const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+// export function getAgeColor(timestamp: string): string {
+//   const now = new Date();
+//   const threatTime = new Date(timestamp);
+//   const diffInMs = now.getTime() - threatTime.getTime();
+//   const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
   
-  if (diffInHours < 1) {
-    return 'bg-[var(--color-threat-critical)]'; // Recent - urgent attention
-  } else if (diffInHours < 24) {
-    return 'bg-[var(--color-threat-medium)]'; // Today - medium priority
-  } else {
-    return 'bg-gray-500'; // Older - lower priority
-  }
-}
+//   if (diffInHours < 1) {
+//     return 'bg-[var(--color-threat-critical)]'; // Recent - urgent attention
+//   } else if (diffInHours < 24) {
+//     return 'bg-[var(--color-threat-medium)]'; // Today - medium priority
+//   } else {
+//     return 'bg-gray-500'; // Older - lower priority
+//   }
+// }
 
 export function formatFullTimestamp(timestamp: string): string {
   const date = new Date(timestamp);

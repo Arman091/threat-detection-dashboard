@@ -50,7 +50,7 @@ export function ThreatTypeIcon({ type }: { type: string }) {
           height: 16
         })}
       </span>
-      <span className={`hidden sm:inline ${config.color}`}>{type}</span>
+      <span className={`${config.color}`}>{type}</span>
     </span>
   );
 }
@@ -60,26 +60,18 @@ export function StatusBadge({ status }: { status: string }) {
     switch (status) {
       case 'Quarantined':
         return {
-          color: 'text-[var(--color-status-quarantined)]',
-          bgColor: 'bg-blue-100',
           icon: '🔒'
         };
       case 'Active':
         return {
-          color: 'text-[var(--color-status-active)]',
-          bgColor: 'bg-red-100',
           icon: '⚠️'
         };
       case 'Resolved':
         return {
-          color: 'text-[var(--color-status-resolved)]',
-          bgColor: 'bg-green-100',
           icon: '✅'
         };
       default:
         return {
-          color: 'text-gray-700',
-          bgColor: 'bg-gray-100',
           icon: '❓'
         };
     }
@@ -89,7 +81,7 @@ export function StatusBadge({ status }: { status: string }) {
 
   return (
     <span 
-      className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${config.bgColor} ${config.color}`}
+      className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium`}
       title={`Status: ${status}`}
     >
       <span className="mr-1">{config.icon}</span>

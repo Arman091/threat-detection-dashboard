@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Threat } from '@/types/threat';
-import { formatThreatAge, getAgeColor, formatFullTimestamp } from '@/utils/formatTime';
+import { formatThreatAge,formatFullTimestamp } from '@/utils/formatTime';
 import { RiskBadge, RiskScoreBar } from './RiskBadge';
 import { ThreatTypeIcon, StatusBadge } from './ThreatTypeIcon';
 
@@ -18,10 +18,6 @@ interface SingleThreatCardProps {
 }
 
 function SingleThreatCard({ threat, isExpanded, onToggle }: SingleThreatCardProps) {
-  const isSuspiciousSender = threat.details.sender.includes('microsft') || 
-                            threat.details.sender.includes('typo') ||
-                            threat.details.sender.includes('fake');
-
   return (
     <div className="border border-gray-200 rounded-lg p-4 mb-4 bg-white shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200 group">
       {/* Header: Risk + Type */}
@@ -30,7 +26,7 @@ function SingleThreatCard({ threat, isExpanded, onToggle }: SingleThreatCardProp
           <RiskBadge score={threat.risk_score} size="sm" />
           <ThreatTypeIcon type={threat.type} />
         </div>
-        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium text-white ${getAgeColor(threat.timestamp)}`}>
+        <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium text-text-primary border border-gray-200`}>
           {formatThreatAge(threat.timestamp)}
         </span>
       </div>
@@ -40,12 +36,18 @@ function SingleThreatCard({ threat, isExpanded, onToggle }: SingleThreatCardProp
         {threat.details.subject}
       </h3>
       
+      {/* Threat ID */}
+      <div className="mb-2">
+        <p className="text-xs text-gray-500 font-mono">
+          ID: {threat.id}
+        </p>
+      </div>
+      
       {/* Sender */}
       <div className="flex items-center justify-between mb-3">
         <div className="flex-1 min-w-0">
-          <p className={`text-sm truncate ${isSuspiciousSender ? 'text-red-600 font-medium' : 'text-gray-600'}`}>
+          <p className={`text-sm truncate text-gray-600`}>
             From: {threat.details.sender}
-            {isSuspiciousSender && <span className="ml-1">⚠️</span>}
           </p>
         </div>
         <StatusBadge status={threat.status} />
@@ -69,15 +71,14 @@ function SingleThreatCard({ threat, isExpanded, onToggle }: SingleThreatCardProp
             <div>
               <h4 className="font-semibold text-gray-900 mb-2">Full Details</h4>
               <div className="space-y-2 text-sm">
-                <p><span className="font-medium">Subject:</span><span className="text-[14px] text-gray-600 pl-2">{threat.details.subject}</span></p>
+                <p><span className="font-medium">Subject:</span><span className="text-[16px] text-gray-600 pl-2">{threat.details.subject}</span></p>
                 <p>
                   <span className="font-medium text-black">Sender:</span>
-                  <span className={isSuspiciousSender ? 'text-red-600 font-medium ml-1' : 'text-[14px] text-gray-600 ml-1'}>
+                  <span className="text-[14px] text-gray-600 ml-1">
                     {threat.details.sender}
-                    {isSuspiciousSender && <span className="ml-1">⚠️ (Suspicious domain)</span>}
                   </span>
                 </p>
-                <p><span className="font-medium">Timestamp:</span><span className="text-[14px] text-gray-600 pl-2">{formatFullTimestamp(threat.timestamp)}</span></p>
+                <p><span className="font-medium">Timestamp:</span><span className="text-[16px] text-gray-600 pl-2">{formatFullTimestamp(threat.timestamp)}</span></p>
               </div>
             </div>
             

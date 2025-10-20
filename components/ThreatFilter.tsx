@@ -27,7 +27,7 @@ export function ThreatFilter({ selectedType, onFilterChange }: ThreatFilterProps
               className={`
                 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 cursor-pointer
                 ${selectedType === option.value
-                  ? 'bg-blue-100 text-blue-700 border-2 border-blue-300 shadow-sm'
+                  ? 'bg-button-primary-bg text-button-primary-text border-2 border-button-primary-bg shadow-sm'
                   : 'bg-gray-50 text-gray-700 border border-gray-200 hover:bg-gray-100 hover:border-gray-300'
                 }
               `}
