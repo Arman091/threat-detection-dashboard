@@ -62,7 +62,7 @@ function ThreatRow({ threat, isExpanded, onToggle }: ThreatRowProps) {
         </td>
         <td className="px-4 py-4">
           <div className="flex items-center justify-between">
-            <span className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium text-text-primary border border-gray-200`}>
+            <span className={`inline-flex items-center px-3 min-w-[80px] justify-center py-1 rounded-full text-sm font-medium text-text-primary border border-gray-200`}>
               {formatThreatAge(threat.timestamp)}
             </span>
             <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-200 text-xs text-button-primary-bg font-medium">
@@ -158,7 +158,7 @@ export function ThreatTable({ threats, filterType = 'all' }: ThreatTableProps) {
               <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Sender
               </th>
-              <th className="pl-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="pl-8 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Age
               </th>
             </tr>

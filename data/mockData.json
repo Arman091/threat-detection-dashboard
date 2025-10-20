@@ -7,7 +7,7 @@
   "threats": [
     {
       "id": "th_1a2b3c",
-      "timestamp": "2023-10-27T08:45:10Z",
+      "timestamp": "2025-10-20T10:00:00Z",
       "type": "Phishing",
       "status": "Quarantined",
       "risk_score": 95,
@@ -29,7 +29,7 @@
     },
     {
       "id": "th_3c4d5e",
-      "timestamp": "2023-10-27T04:15:22Z",
+      "timestamp": "2025-10-20T15:59:00Z",
       "type": "Spam",
       "status": "Quarantined",
       "risk_score": 35,
@@ -51,7 +51,7 @@
     },
     {
       "id": "th_5e6f7g",
-      "timestamp": "2023-10-27T01:20:45Z",
+      "timestamp": "2025-10-19T10:00:00Z",
       "type": "Malware",
       "status": "Quarantined",
       "risk_score": 91,
